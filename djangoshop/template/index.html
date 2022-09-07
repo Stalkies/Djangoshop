@@ -14,7 +14,7 @@
     <header class="header">
         <div class="wrapper">
             <div class="header__wrapper">
-                <a href="#"><img src="{% static 'img/header-logo.svg' %}" alt="DJANGOSHOP"></a>
+                <a href="/"><img src="{% static 'img/header-logo.svg' %}" alt="DJANGOSHOP"></a>
                 <nav class="header__nav">
                     <ul class="header__list">
                         <li class="header__item">
@@ -38,25 +38,16 @@
         <div class="wrapper">
             <section class="main__categories">
                 <ul class="categories__list">
-                    <li class="category">
-                        <a href="#" class="category__link">Laptops</a>
+                    {% for category in categories %}
+                    <li class="category{{category.state}}">
+                        <a href="/categories/{{category.title | lower}}" class="category__link">{{category.title}}</a>
                     </li>
-                    <li class="category">
-                        <a href="#" class="category__link">PC</a>
-                    </li>
-                    <li class="category">
-                        <a href="#" class="category__link">Monitors</a>
-                    </li>
-                    <li class="category">
-                        <a href="#" class="category__link">Powerbanks</a>
-                    </li>
-                    <li class="category">
-                        <a href="#" class="category__link">Smartphones</a>
-                    </li>
+                    {% endfor %}
                 </ul>
             </section>
             <section class="main__goods">
-                {% for good in goods%}
+                {% for good in goods %}
+                {% if good.category|stringformat:"s" == slug|title or good.category|stringformat:"s" == slug|upper %}
                 <div class="product__card">
                     <div class="img__wrapper">
                         <img class="product__image" src="{{ good.picture.url }}" alt="macbook">
@@ -69,6 +60,7 @@
                         <li class="action__wishlist"><img src="{% static 'img/wishlist-ico.svg' %}" alt="Add to wishlist"></li>
                     </ul>
                 </div>
+                {% endif %}
                 {% endfor %}
             </section>
         </div>

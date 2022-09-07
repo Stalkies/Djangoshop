@@ -1,15 +1,36 @@
-from distutils.command.upload import upload
-from email.policy import default
 from django.db import models
+from djangoshop.settings import LANGUAGE_CODE
+
+class Category(models.Model):
+    title = models.CharField(max_length=32, verbose_name='Название')
+    def __str__(self):
+        return self.title
+    class Meta:
+        if LANGUAGE_CODE == 'ru-ru':
+            verbose_name_plural = 'Категории'
+            verbose_name = 'Категорию'
+        else:
+            verbose_name_plural = 'Categories'
+            verbose_name = 'Category'
+    
+    
 
 class Goods(models.Model):
-    title = models.CharField(max_length=20,verbose_name='Название')
-    SYSTEM_CHOICES = (
-        ('MACOS', 'macOS'),
-        ('WINDOWS', 'Windows')
+    title = models.CharField(max_length=32,verbose_name='Название')
+    INFORMATION = (
+        ('macOS', 'macOS'),
+        ('Windows', 'Windows'),
+        ('iOS', 'iOS'),
+        ('Adnroid', 'Android'),
     )
-    system_info = models.CharField(max_length=20, choices=SYSTEM_CHOICES, default='WINDOWS', verbose_name='Операционная система')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    system_info = models.CharField(max_length=20, choices=INFORMATION, blank=True, verbose_name='Операционная система')
     price = models.FloatField(max_length=20, verbose_name='Цена')
     picture = models.ImageField(upload_to='laptops/', default='noimage.png')
     class Meta:
-        verbose_name_plural = 'Товары'
+        if LANGUAGE_CODE == 'ru-ru':
+            verbose_name_plural = 'Товары'
+            verbose_name = 'Товар'
+        else:
+            verbose_name_plural = 'Goods'
+            verbose_name = 'Good'
