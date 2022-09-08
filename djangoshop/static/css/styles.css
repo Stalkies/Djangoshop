@@ -41,14 +41,24 @@ a:visited {
 .header__list{
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
 }
 .header__list:last-child{
     margin-right: 0;
+
 }
 .header__item {
     margin-right: 63px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
+.header__item:last-child{
+    border-radius: 30px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25);
+    padding: 0;
+    height: 100%;
 }
 .header__link {
     text-decoration: none;
@@ -58,6 +68,43 @@ a:visited {
 .header__link:hover{
     border-bottom: 1px solid black;
 }
+
+.signin_field {
+    text-decoration: none;
+    background-color: #ef6b8c;
+    padding: 5px 10px 5px 10px;
+    border-radius: 30px 0px 0px 30px;
+    /* box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25); */
+    display: block;
+    color: white;
+    font-size: 16px;
+}
+.signin_field:hover{
+    background-color: #bb4c62;
+}
+
+.signin_field:visited{
+    color:white;
+}
+.signup_field:visited{
+    color:white;
+}
+
+
+.signup_field {
+    text-decoration: none;
+    padding: 5px 10px 5px 10px;
+    /* box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.25); */
+    border-radius: 0px 30px 30px 0px;
+    color: white;
+    background-color: #42c1fe;
+    font-size: 16px;
+}
+.signup_field:hover{
+
+    background-color: #006b8c;
+}
+
 
 .categories__list {
     display: flex;
@@ -202,4 +249,9 @@ a:visited {
     padding-left: 20px;
     padding-right: 20px;
     border-radius: 0px 10px 10px 0px;
-};
+}
+
+.register__wrapper{
+    display: flex;
+    justify-content: center;
+}

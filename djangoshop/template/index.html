@@ -1,69 +1,31 @@
+{% extends 'base.html'%}
 {% load static %}
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
-    <title>Django Store</title>
-</head>
-<body>
-    <header class="header">
-        <div class="wrapper">
-            <div class="header__wrapper">
-                <a href="/"><img src="{% static 'img/header-logo.svg' %}" alt="DJANGOSHOP"></a>
-                <nav class="header__nav">
-                    <ul class="header__list">
-                        <li class="header__item">
-                            <a href="#" class="header__link">Home</a>
-                        </li>
-                        <li class="header__item">
-                            <a href="#" class="header__link">Cart</a>
-                        </li>
-                        <li class="header__item">
-                            <a href="#" class="header__link">Wishlist</a>
-                        </li>
-                        <li class="header__item">
-                            <a href="#" class="header__link">Contacts</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </div> 
-    </header>
-    <main class="main">
-        <div class="wrapper">
-            <section class="main__categories">
-                <ul class="categories__list">
-                    {% for category in categories %}
-                    <li class="category{{category.state}}">
-                        <a href="/categories/{{category.title | lower}}" class="category__link">{{category.title}}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </section>
-            <section class="main__goods">
-                {% for good in goods %}
-                {% if good.category|stringformat:"s" == slug|title or good.category|stringformat:"s" == slug|upper %}
-                <div class="product__card">
-                    <div class="img__wrapper">
-                        <img class="product__image" src="{{ good.picture.url }}" alt="macbook">
-                    </div>
-                    <p class="product__name">{{ good.title }}</p>
-                    <p class="product__os">{{ good.system_info }}</p>
-                    <ul class="product__actions">
-                        <li class="action__buy"><a href="#" class="product__buy">Buy</a></li>
-                        <li class="price"><span>${{ good.price }}</span></li>
-                        <li class="action__wishlist"><img src="{% static 'img/wishlist-ico.svg' %}" alt="Add to wishlist"></li>
-                    </ul>
-                </div>
-                {% endif %}
+{% block content %}
+        <section class="main__categories">
+            <ul class="categories__list">
+                {% for category in categories %}
+                <li class="category{{category.state}}">
+                    <a href="/categories/{{category.title | lower}}" class="category__link">{{category.title}}</a>
+                </li>
                 {% endfor %}
-            </section>
-        </div>
-    </main>
-</body>
-</html>
+            </ul>
+        </section>
+        <section class="main__goods">
+            {% for good in goods %}
+            {% if good.category.slug|stringformat:"s" == slug %}
+            <div class="product__card">
+                <div class="img__wrapper">
+                    <img class="product__image" src="{{ good.picture.url }}" alt="macbook">
+                </div>
+                <p class="product__name">{{ good.title }}</p>
+                <p class="product__os">{{good.manufacturer}}</p>
+                <ul class="product__actions">
+                    <li class="action__buy"><a href="#" class="product__buy">Buy</a></li>
+                    <li class="price"><span>${{ good.get_price }}</span></li>
+                    <li class="action__wishlist"><img src="{% static 'img/wishlist-ico.svg' %}" alt="Add to wishlist"></li>
+                </ul>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </section>
+{% endblock %}
